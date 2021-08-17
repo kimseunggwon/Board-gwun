@@ -5,7 +5,7 @@ import java.util.List;
 
 import lombok.Data;
 
-@Data
+@Data 
 public class MemberVO {
 	private String userid;
 	private String userpw;
@@ -13,6 +13,8 @@ public class MemberVO {
 	private Date regdate;
 	private Date updateDate;
 	private boolean enabled;
+	
+	private List<AuthVO> authList;
 	
 }
  
