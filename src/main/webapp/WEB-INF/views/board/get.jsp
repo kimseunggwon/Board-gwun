@@ -90,7 +90,7 @@ var userid = "${pinfo.member.userid}";
 	</div>
 </div>
 
-<!--  댓글 쓰기 버튼 -->
+<!--  댓글 쓰기 버튼  -->
 <div class="container">
 	<div class="row">
 		<div class="col-12">
@@ -102,8 +102,9 @@ var userid = "${pinfo.member.userid}";
 		</div>
 	</div>
 </div>  
+ 
 
-<%-- 댓글 입력 모달 --%>
+<!-- 댓글 입력 모달 -->
 
 <div class="modal fade" id="reply-insert-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">

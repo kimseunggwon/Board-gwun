@@ -18,8 +18,8 @@ import org.zerock.service.ReplyService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
-@RequestMapping("/replise")
-@RestController
+@RequestMapping("/replies")
+@RestController 
 @Log4j 
 @AllArgsConstructor
 public class ReplyController {

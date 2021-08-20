@@ -159,7 +159,7 @@ public boolean modify(BoardVO board, MultipartFile file) {
 @Transactional
 public boolean remove(Long bno) {
 	// 댓글 삭제
-	replyMapper.delete(bno);
+	replyMapper.deleteByBno(bno);
 	
 	// 파일 삭제 (s3)
 	BoardVO vo = mapper.read(bno);
@@ -206,11 +206,6 @@ public boolean modfiy(BoardVO board) {
 	
 	return mapper.update(board)==1;
 }
-
-
-
-
-
 
 
 

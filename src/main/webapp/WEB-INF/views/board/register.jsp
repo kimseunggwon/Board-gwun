@@ -30,8 +30,9 @@
 					<textarea id="textarea1" class="form-control" name="content"></textarea>
 				</div>
 				<div class="form-group"> 
-					<label >작성자</label>
-					<textarea id="textarea1" class="form-control" name="writer"></textarea>
+					<label for="input2">작성자</label>
+					<input id="input2" type="hidden" value="${pinfo.member.userid }" readonly class="form-control" name="writer">
+					<input value="${pinfo.member.userName }" readonly class="form-control">
 				</div>
 				<div class="form-group"> 
 					<label for="input3">파일</label>

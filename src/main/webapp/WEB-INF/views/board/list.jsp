@@ -60,9 +60,20 @@
 	
 </script>
 
-
-
 </head>
+
+<style type="text/css">
+ 
+ @font-face {
+	font-family: 'GongGothicMedium';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+</style> 
+ 
 <body>
 
 	<bd:navbar />
@@ -79,36 +90,47 @@
 					</tr>
 				</thead>
 
-                     <!-- foreach써서 list 목록들 불러오기.  -->
-				<c:forEach items="${list }" var="board">
-         
-					<tr> 
-					    <td><c:out value="${board.bno }"/></td>
-					    
-						<td><a href='${appRoot }/board/get?bno=<c:out value="${board.bno}"/>'>
-					     <c:out value="${board.title }" /></a></td>
-					     
-						<td><c:out value="${board.writer }" /></td>
-						<td><fmt:formatDate pattern="yyyy-MM-dd"
-								value="${board.regdate }" /></td>
-						<td><fmt:formatDate pattern="yyyy-MM-dd"
-								value="${board.updateDate }" /></td>
-					</tr>
-
-					<!-- 
-		<tr>
-		 <td><c:out value="${board.bno }" /></td>
-		 <td><c:out value="${board.title }" /></td>
-		 <td><c:out value="${board.writer }" /></td>
-		 <td><fmt:formatDate pattern="yyyy-MM-dd"
-		 value="${board.regdate }"></fmt:formatDate></td>
-		 <td><fmt:formatDate pattern="yyyy-MM-dd"
-		 value="${board.updateDate }"></fmt:formatDate></td>
-		 </tr>
-		 -->
-				</c:forEach>
-			</table>
-				
+              <tbody>
+			<c:forEach items="${list }" var="board">
+				<tr>
+					<td>${board.bno }</td>
+					<td>
+					
+					
+					
+					
+					<c:url value="/board/get" var="getUrl">
+						<c:param name="bno" value="${board.bno }" />
+						<c:param name="pageNum" value="${pageMaker.cri.pageNum }" />
+						<c:param name="amount" value="${pageMaker.cri.amount }" />
+						<c:param name="type" value="${pageMaker.cri.type }"	/>
+						<c:param name="keyword" value="${pageMaker.cri.keyword }" />
+						
+					</c:url>
+					
+					
+					<a href="${getUrl}">
+						${board.title } 
+						<c:if test="${board.replyCnt > 0 }">
+							[${board.replyCnt }]
+						</c:if>
+						
+					</a>
+					
+					</td> 
+					<td>${board.writerName }</td>
+					<td>
+						<fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate }"/>
+					</td>
+					<td>
+						<fmt:formatDate pattern="yyyy-MM-dd" value="${board.updateDate }"/>
+					</td>
+				</tr>
+			</c:forEach>			
+		</tbody>
+		
+	</table>
+</div>
 			
 			<!-- 모달 -->
 

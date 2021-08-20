@@ -1,18 +1,41 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="org.zerock.mapper.ReplyMapper">
 
+<delete id="removeByBnoUserid"> 
+DELETE FROM tbl_reply
+WHERE bno IN (
+    SELECT bno FROM tbl_board WHERE writer = #{userid}
+)
+</delete>
+
+<delete id="removeByUserid">
+DELETE FROM tbl_reply
+WHERE replyer = #{userid}
+</delete>
+
 <insert id="insert">
- insert into tbl_reply (rno, bno, reply, repyer)
- values (#{bno}, #{reply}, #{replyer},#{rno})
+	INSERT INTO tbl_reply (bno, reply, replyer)
+	VALUES (#{bno}, #{reply}, #{replyer})
 </insert>
 
 <select id="read" resultType="org.zerock.domain.ReplyVO">
+	SELECT 
+		r.rno rno,
+		r.bno bno,
+		r.reply reply,
+		r.replyer replyer,
+		r.replyDate replyDate,
+		r.updateDate updateDate,
+		m.username replyerName
+	FROM 
+	    tbl_reply r JOIN tbl_member m ON r.replyer = m.userid
+	WHERE
+		r.rno = #{rno}		
 
-  select * from tbl_reply where rno = #{rno}
 
 </select>
 
@@ -20,10 +43,18 @@
 	DELETE FROM tbl_reply WHERE rno = #{rno}
 </delete>
 
-<update id="update">
-  update tbl_reply set reply =#{reply}, updatedate = sysdate where rno = #{rno}
-</update>
+<insert id="insertSelectKey" useGeneratedKeys="true" keyProperty="rno" keyColumn="rno">
+INSERT INTO tbl_reply (bno, reply, replyer)
+VALUES (#{bno}, #{reply}, #{replyer})
+</insert>
 
+<update id="update">
+UPDATE tbl_reply
+SET reply = #{reply},
+    replyer = #{replyer},
+    updateDate = now()
+WHERE rno = #{rno}
+</update>
 
 <select id="getList" resultType="org.zerock.domain.ReplyVO">
 	SELECT 
@@ -37,16 +68,30 @@
 	FROM 
 	    tbl_reply r JOIN tbl_member m ON r.replyer = m.userid
 	WHERE
-	    r.bno = #{bno} 
+	    r.bno = #{bno}
 	ORDER BY r.rno ASC
-	</select>
 
+</select>
 
- 
+<select id="getCountByBno" resultType="int">
+SELECT COUNT(*) FROM tbl_reply WHERE bno = #{bno}
+</select>
 
-
-
-
+<delete id="deleteByBno">
+DELETE FROM tbl_reply
+WHERE bno = #{bno}
+</delete>
 
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
 

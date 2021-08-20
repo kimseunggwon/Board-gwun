@@ -41,6 +41,7 @@ $(document).ready(function(){
 
 </head>
 <body>
+<bd:navbar />
 <div class="container">	
    
    <h1>Board modify Page</h1>

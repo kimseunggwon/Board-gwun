@@ -3,6 +3,7 @@ package org.zerock.controller;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -52,7 +53,7 @@ public class BoardController {
 		 }
 	
 	@PostMapping("/register")
-	@
+	@PreAuthorize("isAuthenticated()")  
 	public String register(BoardVO board, 
 			@RequestParam("file") MultipartFile file, RedirectAttributes rttr) {
 		log.info("register:" + board);
@@ -76,26 +77,48 @@ public class BoardController {
  } 
 	
 	@PostMapping("/modify")
-	public String modify(BoardVO board, RedirectAttributes rttr) {
+	@PreAuthorize("principal.username == #board.writer")
+	public String modify(BoardVO board, Criteria cri,
+			 @RequestParam("file") MultipartFile file, RedirectAttributes rttr) {
 		log.info("modify"+board);
+		
+		boolean success = service.modify(board,file);
 		
 		if(service.modfiy(board)) {
 			rttr.addFlashAttribute("result","success");
 		}
+		
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		
+		
 		return "redirect:/board/list";
 	}
-	
+	 
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") long bno, RedirectAttributes rttr) {
+	@PreAuthorize("principal.username == #writer")
+	public String remove(@RequestParam("bno") Long bno, 
+		Criteria cri,RedirectAttributes rttr,String writer) {
 		log.info("remove..." + bno);
 		
-		if(service.remove(bno)) {
+		boolean success = service.remove(bno);
+		
+		if(success) {
 			rttr.addFlashAttribute("result", "success");
 		}
+		
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		
 		return "redirect:/board/list";
 	}
 	
 	@GetMapping("/register")
+	@PreAuthorize("isAuthenticated()") 
 	public void register() {
 		 
 	}

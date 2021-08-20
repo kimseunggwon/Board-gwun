@@ -9,7 +9,9 @@ import org.zerock.domain.ReplyVO;
 
 public interface ReplyMapper {
 	
-	public int inser(ReplyVO vo);
+	public int insert(ReplyVO vo);
+	
+	public int insertSelectKey(ReplyVO vo);
 
 	public ReplyVO read(Long rno);   //특정 댓글 일기
 	

@@ -1,5 +1,5 @@
 package org.zerock.service;
-
+ 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +16,12 @@ public class ReplyServiceImpl implements ReplyService{
 
 	@Setter(onMethod_ =@Autowired)
 	private ReplyMapper mapper;
-	
+	 
 	@Override
 	public int register(ReplyVO vo) {
 		log.info("register" + vo);
 		 
-		return mapper.inser(vo);
+		return mapper.insert(vo);
 
 	}
 	@Override

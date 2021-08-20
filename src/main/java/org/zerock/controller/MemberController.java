@@ -28,7 +28,7 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @RequestMapping("/member")
-@Log4j
+@Log4j 
 public class MemberController {
 	
 	@Setter(onMethod_ = @Autowired)
@@ -59,7 +59,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/info")
-	@PreAuthorize("isAuthenticated()")
+	
 	public void info(Criteria cri, Principal principal, Model model) {
 		log.info(principal.getName());
 		
@@ -69,7 +69,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/modify")
-	@PreAuthorize("principal.username == #vo.userid")
+
 	public String modify(MemberVO vo, RedirectAttributes rttr, Authentication auth, String oldPassword) {
 		boolean ok = service.modify(vo, oldPassword);
 		
@@ -85,7 +85,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/remove")
-	@PreAuthorize("principal.username == #vo.userid")
+	
 	public String remove(MemberVO vo, RedirectAttributes rttr, HttpServletRequest req, String oldPassword) throws ServletException {
 		boolean ok = service.remove(vo, oldPassword);
 		
